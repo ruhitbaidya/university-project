@@ -1,16 +1,39 @@
-import { Request, Response } from "express";
-// import { studentServices } from "./student.services";
+import { catchAsyncFun } from "../../app/utils/catchAsync";
+import { sendResponse } from "../../app/utils/response";
+import { studentServices } from "./student.services";
 
-// const studentCreateControler = async (req: Request, res: Response) => {
-//   const { student } = req.body;
-//   const result = await studentServices.studentCreateServices(student);
-//   res.status(200).json({
-//     success: true,
-//     message: "Student Create Successfull",
-//     result,
-//   });
-// };
+const getAllSudentControler = catchAsyncFun(async (req, res) => {
+  const result = await studentServices.getAllStudentServices();
+  sendResponse(res, {
+    status: 200,
+    message: "Students Get Successfully",
+    success: true,
+    result,
+  });
+});
 
-// export const studentControler = {
-//   studentCreateControler,
-// };
+const getSingalSudentControler = catchAsyncFun(async (req, res) => {
+  const result = await studentServices.getAllStudentServices();
+  sendResponse(res, {
+    status: 200,
+    message: "Students Get Successfully",
+    success: true,
+    result,
+  });
+});
+
+const deleteSudentControler = catchAsyncFun(async (req, res) => {
+  const result = await studentServices.getAllStudentServices();
+  sendResponse(res, {
+    status: 200,
+    message: "Students Delete Successfully",
+    success: true,
+    result,
+  });
+});
+
+export const studentControler = {
+  getAllSudentControler,
+  getSingalSudentControler,
+  deleteSudentControler,
+};

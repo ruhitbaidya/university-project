@@ -1,15 +1,22 @@
 import { studentModel } from "./student.model";
 import { Student } from "./students.interface";
 
-// const studentCreateServices = async (student: Student) => {
-//   try {
-//     const result = await studentModel.create(student);
-//     return result;
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+const getAllStudentServices = async () => {
+  const result = await studentModel.find();
+  return result;
+};
 
-// export const studentServices = {
-//   studentCreateServices,
-// };
+const getSingalStudentServices = async (id: string) => {
+  const result = await studentModel.findOne({ _id: id });
+  return result;
+};
+
+const deleteStudentServices = async (id: string) => {
+  const result = await studentModel.deleteOne({ _id: id });
+  return result;
+};
+export const studentServices = {
+  getAllStudentServices,
+  getSingalStudentServices,
+  deleteStudentServices,
+};
