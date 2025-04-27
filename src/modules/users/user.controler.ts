@@ -1,12 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { userServices } from "./user.services";
+import { catchAsyncFun } from "../../app/utils/catchAsync";
 
-const userCreateControler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+const userCreateControler = catchAsyncFun(async (req,res) => {
     const { password, student } = req.body;
     const result = await userServices.userCreateServices(password, student);
     res.status(200).json({
@@ -14,10 +10,7 @@ const userCreateControler = async (
       message: "Student Create Successfull",
       result,
     });
-  } catch (err) {
-    next(err);
-  }
-};
+});
 
 export const userControler = {
   userCreateControler,
