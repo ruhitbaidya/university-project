@@ -31,5 +31,6 @@ export type Student = {
   premanentAddress: string;
   guardian: Guardian;
   localGuardian: LocalGuadian;
+  academicSemister: Types.ObjectId;
   profileImage: string;
 };

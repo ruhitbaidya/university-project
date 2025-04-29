@@ -54,6 +54,11 @@ const StudentSchema = new Schema<Student>(
     guardian: GuardianSchema,
     localGuardian: LocalGuardianSchema,
     profileImage: { type: String, required: true },
+    academicSemister: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "academicSemister",
+    },
   },
   { timestamps: true }
 );

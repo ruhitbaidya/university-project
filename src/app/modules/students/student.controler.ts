@@ -1,5 +1,5 @@
-import { catchAsyncFun } from "../../app/utils/catchAsync";
-import { sendResponse } from "../../app/utils/response";
+import { catchAsyncFun } from "../../utils/catchAsync";
+import { sendResponse } from "../../utils/response";
 import { studentServices } from "./student.services";
 
 const getAllSudentControler = catchAsyncFun(async (req, res) => {

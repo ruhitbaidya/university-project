@@ -1,4 +1,4 @@
-import { config } from "../../app/config/config";
+import { config } from "../../config/config";
 import { studentModel } from "../students/student.model";
 import { Student } from "../students/students.interface";
 import { Tuser } from "./user.interface";
