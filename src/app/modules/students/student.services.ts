@@ -1,5 +1,4 @@
 import { studentModel } from "./student.model";
-import { Student } from "./students.interface";
 
 const getAllStudentServices = async () => {
   const result = await studentModel.find();

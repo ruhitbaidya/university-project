@@ -33,4 +33,5 @@ export type Student = {
   localGuardian: LocalGuadian;
   academicSemister: Types.ObjectId;
   profileImage: string;
+  academicDepertment: Types.ObjectId;
 };

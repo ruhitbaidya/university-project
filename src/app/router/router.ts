@@ -3,6 +3,7 @@ import { studentRouter } from "../modules/students/student.router";
 import { userRouer } from "../modules/users/user.router";
 import { semisterRouter } from "../modules/semister/semister.router";
 import { facultyRouter } from "../modules/academicFaculty/academicFacultyRouter";
+import { depertmentRouter } from "../modules/depertment/depertmentRouter";
 const router = express.Router();
 
 const routers = [
@@ -19,9 +20,13 @@ const routers = [
     route: semisterRouter,
   },
   {
-    path : "/faculty",
-    route : facultyRouter
-  }
+    path: "/faculty",
+    route: facultyRouter,
+  },
+  {
+    path: "/depertment",
+    route: depertmentRouter,
+  },
 ];
 
 routers.forEach((item) => router.use(`/api/v1${item.path}`, item.route));

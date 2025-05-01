@@ -1,3 +1,4 @@
+import AppError from "../../errors/appError";
 import { TSemister } from "./semister.interface";
 import { academicModel } from "./semister.model";
 
@@ -13,7 +14,7 @@ const semisterCreateServices = async (data: TSemister) => {
   };
 
   if (semisterExistMapper[data.name] !== data.code) {
-    throw new Error("Invalid Semister Code");
+    throw new AppError(403, "Invalid Semister Code");
   }
   const result = await academicModel.create(data);
   return result;
@@ -39,7 +40,7 @@ const updateSemisterServices = async (id: string, data: Partial<TSemister>) => {
     Fall: "03",
   };
   if (semisterExistMapper[data?.name as string] !== data.code) {
-    throw new Error("Invalid Semister Code");
+    throw new AppError(403, "Invalid Semister Code");
   }
   const result = await academicModel.findOneAndUpdate(
     { _id: id },

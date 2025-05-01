@@ -59,6 +59,11 @@ const StudentSchema = new Schema<Student>(
       required: true,
       ref: "academicSemister",
     },
+    academicDepertment: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "depertment",
+    },
   },
   { timestamps: true }
 );

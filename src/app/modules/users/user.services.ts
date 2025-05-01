@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { config } from "../../config/config";
 import { academicModel } from "../semister/semister.model";
 import { studentModel } from "../students/student.model";
@@ -9,21 +10,32 @@ import { userModel } from "./user.model";
 const userCreateServices = async (password: string, studentdata: Student) => {
   const userData: Partial<Tuser> = {};
 
-  const semisterInfo = await academicModel.findById(
-    studentdata.academicSemister
-  );
+  const session = await mongoose.startSession();
+  try {
+    session.startTransaction();
 
-  if (semisterInfo) {
     userData.password = password || config.default_password;
     userData.role = "student";
-    userData.id = await generateId(semisterInfo);
-    const newUser = await userModel.create(userData);
-    if (Object.keys(newUser).length) {
-      studentdata.id = newUser.id;
-      studentdata.user = newUser._id;
-      const resultUser = await studentModel.create(studentdata);
-      return resultUser;
+    const semisterInfo = await academicModel.findById(
+      studentdata.academicSemister
+    );
+    if (semisterInfo) {
+      userData.id = await generateId(semisterInfo);
     }
+    const newUser = await userModel.create([userData], { session });
+
+    studentdata.id = newUser[0].id;
+    studentdata.user = newUser[0]._id;
+    const resultUser = await studentModel.create([studentdata], {
+      session,
+    });
+
+    await session.commitTransaction();
+    await session.endSession();
+    return resultUser;
+  } catch (err) {
+    await session.abortTransaction();
+    await session.endSession();
   }
 };
 
