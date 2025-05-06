@@ -23,7 +23,8 @@ const getSingalSudentControler = catchAsyncFun(async (req, res) => {
 });
 
 const deleteSudentControler = catchAsyncFun(async (req, res) => {
-  const result = await studentServices.getAllStudentServices();
+  const id = req.params.id;
+  const result = await studentServices.deleteStudentServices(id);
   sendResponse(res, {
     status: 200,
     message: "Students Delete Successfully",

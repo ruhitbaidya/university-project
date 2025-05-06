@@ -5,6 +5,8 @@ import {
   Student,
   userName,
 } from "./students.interface";
+import AppError from "../../errors/appError";
+import status from "http-status";
 
 const GuardianSchema = new Schema<Guardian>({
   fatherName: { type: String, required: true },
@@ -54,6 +56,7 @@ const StudentSchema = new Schema<Student>(
     guardian: GuardianSchema,
     localGuardian: LocalGuardianSchema,
     profileImage: { type: String, required: true },
+    isDeleted: { type: Boolean, default: false },
     academicSemister: {
       type: Schema.Types.ObjectId,
       required: true,
@@ -67,5 +70,23 @@ const StudentSchema = new Schema<Student>(
   },
   { timestamps: true }
 );
+
+StudentSchema.pre("findOneAndUpdate", async function (next) {
+  try {
+    const query = this.getQuery();
+    console.log("Query:", query);
+
+    const result = await studentModel.findOne(query);
+    console.log("Result:", result);
+
+    if (result) {
+      return next();
+    } else {
+      return new AppError(status.NOT_FOUND, "This Student Not Found");
+    }
+  } catch (err: any) {
+    return new AppError(status.NOT_FOUND, "Something went wrong");
+  }
+});
 
 export const studentModel = model<Student>("student", StudentSchema);
