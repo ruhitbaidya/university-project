@@ -74,15 +74,11 @@ const StudentSchema = new Schema<Student>(
 StudentSchema.pre("findOneAndUpdate", async function (next) {
   try {
     const query = this.getQuery();
-    console.log("Query:", query);
-
     const result = await studentModel.findOne(query);
-    console.log("Result:", result);
-
     if (result) {
-      return next();
+      next();
     } else {
-      return new AppError(status.NOT_FOUND, "This Student Not Found");
+      throw new AppError(status.NOT_FOUND, "This Student Not Found");
     }
   } catch (err: any) {
     return new AppError(status.NOT_FOUND, "Something went wrong");

@@ -22,6 +22,18 @@ const getSingalSudentControler = catchAsyncFun(async (req, res) => {
   });
 });
 
+const updateStudentControler = catchAsyncFun(async (req, res) => {
+  const id = req.params.id;
+  const stData = req.body;
+  const result = await studentServices.updateStudentServices(id, stData);
+  sendResponse(res, {
+    success: true,
+    message: "Student Update Successs",
+    result: result || null,
+    status: 200,
+  });
+});
+
 const deleteSudentControler = catchAsyncFun(async (req, res) => {
   const id = req.params.id;
   const result = await studentServices.deleteStudentServices(id);
@@ -36,5 +48,6 @@ const deleteSudentControler = catchAsyncFun(async (req, res) => {
 export const studentControler = {
   getAllSudentControler,
   getSingalSudentControler,
+  updateStudentControler,
   deleteSudentControler,
 };

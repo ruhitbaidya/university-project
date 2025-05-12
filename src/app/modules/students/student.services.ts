@@ -12,6 +12,35 @@ const getSingalStudentServices = async (id: string) => {
   return result;
 };
 
+const updateStudentServices = async (
+  id: string,
+  payload: Record<string, unknown>
+) => {
+  const { name, guardian, localGuardian, ...remainStudent } = payload;
+
+  const updateStude = { ...remainStudent };
+  if (name && Object.keys(name).length) {
+    for (const [key, value] of Object.entries(name)) {
+      updateStude[`name.${key}`] = value;
+    }
+  }
+  if (guardian && Object.keys(guardian).length) {
+    for (const [key, value] of Object.entries(guardian)) {
+      updateStude[`guardian.${key}`] = value;
+    }
+  }
+  if (localGuardian && Object.keys(localGuardian).length) {
+    for (const [key, value] of Object.entries(localGuardian)) {
+      updateStude[`localGuardian.${key}`] = value;
+    }
+  }
+
+  const result = await studentModel.updateOne({ id }, updateStude, {
+    new: true,
+  });
+  console.log(result);
+  return result;
+};
 const deleteStudentServices = async (id: string) => {
   const session = await mongoose.startSession();
   try {
@@ -41,5 +70,6 @@ const deleteStudentServices = async (id: string) => {
 export const studentServices = {
   getAllStudentServices,
   getSingalStudentServices,
+  updateStudentServices,
   deleteStudentServices,
 };
