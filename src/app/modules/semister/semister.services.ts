@@ -13,9 +13,9 @@ const semisterCreateServices = async (data: TSemister) => {
     Fall: "03",
   };
 
-  if (semisterExistMapper[data.name] !== data.code) {
-    throw new AppError(403, "Invalid Semister Code");
-  }
+  // if (semisterExistMapper[data.name] !== data.code) {
+  //   throw new AppError(403, "Invalid Semister Code");
+  // }
   const result = await academicModel.create(data);
   return result;
 };

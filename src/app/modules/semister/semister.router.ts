@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post(
   "/create-semister",
-  validationCheck(academicValidationSchema),
+  // validationCheck(academicValidationSchema),
   semisterControler.semisterCreateControler
 );
 
