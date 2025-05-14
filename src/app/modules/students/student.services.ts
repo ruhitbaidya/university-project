@@ -2,9 +2,37 @@ import mongoose from "mongoose";
 import { studentModel } from "./student.model";
 import { userModel } from "../users/user.model";
 
-const getAllStudentServices = async () => {
-  const result = await studentModel.find();
-  return result;
+const getAllStudentServices = async (query: Record<string, unknown>) => {
+  const searchTerm = query?.searchText || "";
+  const coTerams = { ...query };
+  const searchFields = ["email", "name.firstName", "premanentAddress"];
+
+  const searchQuery = studentModel.find({
+    $or: searchFields.map((field) => ({
+      [field]: { $regex: searchTerm, $options: "i" },
+    })),
+  });
+
+  const delItem = ["searchText", "sort", "limit"];
+  delItem.forEach((ele) => delete coTerams[ele]);
+  console.log(query, coTerams);
+  const searchFilter = searchQuery.find(coTerams);
+
+  let sort = "-createdAt";
+  if (query?.sort) {
+    sort = query.sort as string;
+  }
+
+  const sortSearch = searchFilter.sort(sort);
+
+  let limit = 1;
+  if (query.limit) {
+    limit = query.limit as number;
+  }
+
+  const limitQuery = await sortSearch.limit(limit);
+
+  return limitQuery;
 };
 
 const getSingalStudentServices = async (id: string) => {

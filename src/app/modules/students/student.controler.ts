@@ -3,7 +3,8 @@ import { sendResponse } from "../../utils/response";
 import { studentServices } from "./student.services";
 
 const getAllSudentControler = catchAsyncFun(async (req, res) => {
-  const result = await studentServices.getAllStudentServices();
+  const query = req?.query;
+  const result = await studentServices.getAllStudentServices(query);
   sendResponse(res, {
     status: 200,
     message: "Students Get Successfully",
@@ -13,7 +14,8 @@ const getAllSudentControler = catchAsyncFun(async (req, res) => {
 });
 
 const getSingalSudentControler = catchAsyncFun(async (req, res) => {
-  const result = await studentServices.getAllStudentServices();
+  const id = req.params.id;
+  const result = await studentServices.getSingalStudentServices(id);
   sendResponse(res, {
     status: 200,
     message: "Students Get Successfully",

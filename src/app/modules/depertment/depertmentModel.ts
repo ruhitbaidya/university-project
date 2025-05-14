@@ -6,6 +6,7 @@ const depertMentSchema = new Schema<TDepertment>(
     name: {
       type: String,
       required: true,
+      unique: true,
     },
     academicFaculty: {
       type: Schema.Types.ObjectId,
