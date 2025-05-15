@@ -12,6 +12,11 @@ const userCreateControler = catchAsyncFun(async (req, res) => {
   });
 });
 
+const facultyUserCreateControler = catchAsyncFun(async (req, res) => {
+  const result = await userServices.facultyUserCreateServices(req.body);
+  sendResponse(res, { message: "create success faculty", status: 200, result });
+});
 export const userControler = {
   userCreateControler,
+  facultyUserCreateControler,
 };

@@ -27,6 +27,10 @@ const routers = [
     path: "/depertment",
     route: depertmentRouter,
   },
+  {
+    path: "/faculty",
+    route: facultyRouter,
+  },
 ];
 
 routers.forEach((item) => router.use(`/api/v1${item.path}`, item.route));
